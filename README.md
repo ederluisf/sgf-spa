@@ -1,15 +1,3 @@
-# bash
+# SGF-SPA
 
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader)
+Sistema desenvolvido como resultado de um trabalho de conclusão de curso (TCC) que tem como objetivo o auxílio efetivo na gestão de uma frota de veículos, principalmente no que diz respeito à manutenção da mesma.
