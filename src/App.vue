@@ -2,7 +2,8 @@
   <div id="app">
     <v-app id="sgf-root">
 
-      <v-navigation-drawer :class="miniDrawer ? 'nav-drawer-mini' : 'nav-drawer'" fixed :clipped="$vuetify.breakpoint.mdAndUp" app v-model="drawer" :mini-variant.sync="miniDrawer">
+      <v-navigation-drawer :class="miniDrawer ? 'nav-drawer-mini' : 'nav-drawer'" fixed :clipped="$vuetify.breakpoint.mdAndUp" 
+                           app v-model="drawer" :mini-variant.sync="miniDrawer">
         <v-list dense>
           <v-list-group v-for="menu in menus" :key="menu.title" :prepend-icon="menu.action" no-action>
             <v-list-tile slot="activator">
@@ -10,7 +11,7 @@
                 <v-list-tile-title>{{ menu.title }}</v-list-tile-title>
               </v-list-tile-content>
             </v-list-tile>
-            <v-list-tile v-for="subMenu in menu.subMenus" :key="subMenu.title" @click="goTo(subMenu.route)">
+            <v-list-tile v-for="subMenu in menu.subMenus" :key="subMenu.title" :to="subMenu.route">
               <v-list-tile-action class="submenu-icon">
                 <v-icon small>{{ subMenu.action }}</v-icon>
               </v-list-tile-action>
@@ -117,9 +118,6 @@ export default {
   },
 
   methods: {
-    goTo (route) {
-      this.$router.push({ name: route })
-    }
   }
 }
 </script>

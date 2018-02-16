@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import Home from '@/components/Home'
-import Manufacturer from '@/components/Manufacturer'
+import ManufacturerList from '@/components/manufacturer/ManufacturerList'
 
 Vue.use(Router)
 
@@ -21,8 +21,8 @@ export default new Router({
     },
     {
       path: '/manufacturer',
-      name: 'Manufacturer',
-      component: Manufacturer
+      name: 'manufacturer',
+      component: ManufacturerList
     }
   ]
 })
