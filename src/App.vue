@@ -2,7 +2,7 @@
   <div id="app">
     <v-app id="sgf-root">
 
-      <v-navigation-drawer :class="miniDrawer ? 'nav-drawer-mini' : 'nav-drawer'" fixed :clipped="$vuetify.breakpoint.mdAndUp" 
+      <v-navigation-drawer fixed :clipped="$vuetify.breakpoint.mdAndUp" width="250" mini-variant-width="60"
                            app v-model="drawer" :mini-variant.sync="miniDrawer">
         <v-list dense>
           <v-list-group v-for="menu in menus" :key="menu.title" :prepend-icon="menu.action" no-action>
@@ -24,7 +24,7 @@
       </v-navigation-drawer>
 
       <v-toolbar color="blue darken-3" dark app fixed :clipped-left="$vuetify.breakpoint.mdAndUp">
-        <v-toolbar-title class="ml-0 text-md-left text-sm-left text-xs-left nav-drawer">
+        <v-toolbar-title class="ml-0 text-md-left text-sm-left text-xs-left">
           <v-toolbar-side-icon @click.stop="$vuetify.breakpoint.mdAndUp ? miniDrawer = !miniDrawer : drawer = !drawer"></v-toolbar-side-icon>
           <span class="hidden-sm-and-down">SGF</span>
         </v-toolbar-title>
@@ -48,7 +48,7 @@
       </v-toolbar>
 
       <v-content>
-        <v-container fluid fill-height>
+        <v-container fluid fill-height px-2 py-2>
           <v-layout justify-center align-center>
             <router-view/>
           </v-layout>
@@ -123,14 +123,6 @@ export default {
 </script>
 
 <style scoped>
-  .nav-drawer {
-    width: 250px !important;
-  }
-
-  .nav-drawer-mini {
-    width: 60px !important;
-  }
-
   .submenu-icon {
     min-width: 30px;
   }
