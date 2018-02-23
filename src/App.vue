@@ -2,50 +2,11 @@
   <div id="app">
     <v-app id="sgf-root">
 
-      <v-navigation-drawer fixed :clipped="$vuetify.breakpoint.mdAndUp" width="250" mini-variant-width="60"
-                           app v-model="drawer" :mini-variant.sync="miniDrawer">
-        <v-list dense>
-          <v-list-group v-for="menu in menus" :key="menu.title" :prepend-icon="menu.action" no-action>
-            <v-list-tile slot="activator">
-              <v-list-tile-content>
-                <v-list-tile-title>{{ menu.title }}</v-list-tile-title>
-              </v-list-tile-content>
-            </v-list-tile>
-            <v-list-tile v-for="subMenu in menu.subMenus" :key="subMenu.title" :to="subMenu.route">
-              <v-list-tile-action class="submenu-icon">
-                <v-icon small>{{ subMenu.action }}</v-icon>
-              </v-list-tile-action>
-              <v-list-tile-content>
-                <v-list-tile-title>{{ subMenu.title }}</v-list-tile-title>
-              </v-list-tile-content>
-            </v-list-tile>
-          </v-list-group>
-        </v-list>
-      </v-navigation-drawer>
+      <app-login></app-login>
 
-      <v-toolbar color="blue darken-3" dark app fixed :clipped-left="$vuetify.breakpoint.mdAndUp">
-        <v-toolbar-title class="ml-0 text-md-left text-sm-left text-xs-left">
-          <v-toolbar-side-icon @click.stop="$vuetify.breakpoint.mdAndUp ? miniDrawer = !miniDrawer : drawer = !drawer"></v-toolbar-side-icon>
-          <span class="hidden-sm-and-down">SGF</span>
-        </v-toolbar-title>
+      <app-nav-drawer></app-nav-drawer>
 
-        <v-spacer></v-spacer>
-
-        <v-btn icon @click.stop="dialog = !dialog">
-          <v-icon>person_outline</v-icon>
-        </v-btn>
-
-        <v-btn icon>
-          <v-icon>notifications</v-icon>
-        </v-btn>
-
-        <v-btn icon large>
-          <v-avatar size="32px" tile>
-            <img src="https://vuetifyjs.com/static/doc-images/logo.svg"
-                alt="Vuetify">
-          </v-avatar>
-        </v-btn>
-      </v-toolbar>
+      <app-toolbar></app-toolbar>
 
       <v-content>
         <v-container fluid fill-height px-2 py-2>
@@ -55,63 +16,36 @@
         </v-container>
       </v-content>
 
-      <v-dialog v-model="dialog" width="400px">
-        <v-container grid-list-sm>
-          <v-layout align-center justify-center>
-          <v-flex>
-              <v-card class="elevation-12">
-              <v-toolbar dark color="primary">
-                  <v-toolbar-title>Login</v-toolbar-title>
-              </v-toolbar>
-              <v-card-text>
-                  <v-form>
-                  <v-text-field prepend-icon="person" name="login" label="Login" type="text"></v-text-field>
-                  <v-text-field prepend-icon="lock" name="password" label="Senha" id="password" type="password"></v-text-field>
-                  </v-form>
-              </v-card-text>
-              <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn color="primary">Entrar</v-btn>
-              </v-card-actions>
-              </v-card>
-          </v-flex>
-          </v-layout>
-        </v-container>
-      </v-dialog>
     </v-app>
   </div>
 </template>
 
 <script>
+import NavDrawer from './components/layout/NavDrawer.vue'
+import Toolbar from './components/layout/Toolbar.vue'
+import Login from './components/layout/Login.vue'
+
 export default {
   name: 'App',
+
+  components: {
+    appNavDrawer: NavDrawer,
+    appToolbar: Toolbar,
+    appLogin: Login
+  },
+
   data: () => ({
-    dialog: false,
-    miniDrawer: false,
-    drawer: null,
-    menus: [
-      {
-        action: 'library_books',
-        title: 'Cadastros',
-        subMenus: [{ title: 'Montadoras', action: 'build', route: 'Manufacturer' }]
-      },
-      {
-        action: 'local_activity',
-        title: 'Attractions',
-        subMenus: [{ title: 'List Item' }]
-      },
-      {
-        action: 'restaurant',
-        title: 'Dining',
-        active: true,
-        subMenus: [
-          { title: 'Breakfast & brunch' },
-          { title: 'New American' },
-          { title: 'Sushi' }
-        ]
-      }
-    ]
+    dialog: false
   }),
+
+  computed: {
+    drawer () {
+      return this.$store.getters.drawer
+    },
+    miniDrawer () {
+      return this.$store.getters.miniDrawer
+    }
+  },
 
   props: {
     source: String
@@ -121,9 +55,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-  .submenu-icon {
-    min-width: 30px;
-  }
-</style>

@@ -12,7 +12,6 @@
         <v-data-table :headers="headers" :items="manufacturers" :search="search" rows-per-page-text="Itens por página"
                       :rows-per-page-items="[5, 10, 25, {text: 'Todos', value: -1}]">
           <template slot="items" slot-scope="props">
-            <td>{{ props.item.name }}</td>
             <td class="justify-center">{{ props.item.name }}</td>
             <td class="justify-center layout px-0">
               <v-btn icon class="mx-0" @click="editItem(props.item)">
@@ -45,7 +44,6 @@ export default {
       pageTitle: 'Montadoras',
 
       headers: [
-        { text: 'Nome', value: 'name' },
         { text: 'Nome', value: 'name' },
         { text: 'Editar', value: 'name', sortable: false, width: 50 }
       ],
