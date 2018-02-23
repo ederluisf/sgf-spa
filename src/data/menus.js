@@ -8,7 +8,7 @@ export default [
   },
   {
     action: 'local_activity',
-    title: 'Attractions',
+    title: 'Manutenções',
     subMenus: [{ title: 'List Item' }]
   },
   {
