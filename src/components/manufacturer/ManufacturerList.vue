@@ -14,9 +14,18 @@
           <template slot="items" slot-scope="props">
             <td class="justify-center">{{ props.item.name }}</td>
             <td class="justify-center layout px-0">
-              <v-btn icon class="mx-0" @click="editItem(props.item)">
-                <v-icon color="blue">edit</v-icon>
-              </v-btn>
+              <v-tooltip bottom open-delay="1500">
+                <v-btn icon class="mx-0" @click="editItem(props.item)" slot="activator">
+                  <v-icon color="blue">edit</v-icon>
+                </v-btn>
+                <span>Editar</span>
+              </v-tooltip>
+              <v-tooltip bottom open-delay="1500">
+                <v-btn icon class="mx-0" @click="deleteItem(props.item)" slot="activator">
+                  <v-icon color="red">delete_forever</v-icon>
+                </v-btn>
+                <span>Remover</span>
+              </v-tooltip>
             </td>
           </template>
 
@@ -45,7 +54,7 @@ export default {
 
       headers: [
         { text: 'Nome', value: 'name' },
-        { text: 'Editar', value: 'name', sortable: false, width: 50 }
+        { text: 'Ações', value: 'name', sortable: false, width: 50 }
       ],
 
       // Dados temporários apenas para a tela, depois será implantado o padrão vuex e na action buscará os dados via axios
