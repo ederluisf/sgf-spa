@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <h1>Componente de Montadoras!!!</h1>
-  </div>
+  <form>
+    <v-text-field label="Name"></v-text-field>
+  </form>
 </template>
 
 <script>

@@ -1,29 +1,39 @@
 <template>
   <v-flex fill-height>
-    <v-card flat height="100%">
+    <v-card flat style="height: 100%;">
 
       <!-- Barra de Título -->
       <v-card-title>
         <h3 class="headline"> {{ getPageTitle() }} </h3>
         <v-spacer></v-spacer>
         <v-spacer></v-spacer>
-        <v-text-field append-icon="search" v-model="search" @input="doSearch" single-line hide-details placeholder="Pesquisar"></v-text-field>
+        <v-text-field append-icon="search" v-model="search" @input="doSearch"
+                      v-show="pageType === 'LIST'" single-line hide-details placeholder="Pesquisar"></v-text-field>
       </v-card-title>
 
       <!-- Tabela ou Formulário -->
       <v-card-text>
-        <app-table></app-table>
+        <app-table v-if="pageType === 'LIST'"></app-table>
+        <slot v-else name="form"></slot>
       </v-card-text>
 
       <!-- Barra de botões -->
-      <v-card-actions>
-        <v-spacer/>
-        <v-btn v-show="pageType === 'LIST'" color="primary" @click="newItem">Novo</v-btn>
-        <v-btn v-show="pageType === 'FORM_NEW' || pageType === 'FORM_EDIT'" color="success" @click="save">Salvar</v-btn>
-        <v-btn v-show="pageType === 'FORM_NEW' || pageType === 'FORM_EDIT'" color="error" @click="cancel">Cancelar</v-btn>
+      <v-card-actions class="absolute-bottom pr-4">
+        <v-btn v-show="pageType === 'LIST'" color="primary" @click="newItem">
+          Novo
+        </v-btn>
+
+        <v-btn v-show="pageType === 'FORM_NEW' || pageType === 'FORM_EDIT'" color="success"
+               @click="save">
+          Salvar
+        </v-btn>
+
+        <v-btn v-show="pageType === 'FORM_NEW' || pageType === 'FORM_EDIT'" color="error"
+               @click="cancel" class="ml-4">
+          Cancelar
+        </v-btn>
       </v-card-actions>
     </v-card>
-
   </v-flex>
 </template>
 
@@ -80,3 +90,15 @@ export default {
   }
 }
 </script>
+
+<style>
+.absolute-bottom {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  -webkit-box-pack: end;
+  justify-content: flex-end;
+  transition: all .4s cubic-bezier(.25,.8,.5,1);
+  width: 100%;
+}
+</style>
