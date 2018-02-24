@@ -4,7 +4,8 @@ import headersTemp from '../../data/headersTemp'
 const state = {
   headers: [],
   items: [],
-  search: ''
+  search: '',
+  pageType: 'LIST'
 }
 
 const mutations = {
@@ -16,6 +17,9 @@ const mutations = {
   },
   'SET_SEARCH' (state, search) {
     state.search = search
+  },
+  'SET_PAGE_TYPE' (state, pageType) {
+    state.pageType = pageType
   }
 }
 
@@ -28,6 +32,9 @@ const actions = {
   },
   setSearch: ({ commit }, search) => {
     commit('SET_SEARCH', search)
+  },
+  setPageType: ({ commit }, pageType) => {
+    commit('SET_PAGE_TYPE', pageType)
   }
 }
 
@@ -40,6 +47,9 @@ const getters = {
   },
   search: state => {
     return state.search
+  },
+  pageType: state => {
+    return state.pageType
   }
 }
 

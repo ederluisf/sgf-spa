@@ -18,6 +18,7 @@ export default [
     subMenus: [
       { title: 'Breakfast & brunch' },
       { title: 'New American' },
+      { title: 'Bauru' },
       { title: 'Sushi' }
     ]
   }

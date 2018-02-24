@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   created () {
@@ -40,6 +40,16 @@ export default {
       'items',
       'search'
     ])
+  },
+
+  methods: {
+    ...mapActions([
+      'setPageType'
+    ]),
+
+    editItem (item) {
+      this.setPageType('FORM_EDIT')
+    }
   }
 }
 </script>

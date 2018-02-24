@@ -7,7 +7,7 @@
         <h3 class="headline"> {{ getPageTitle() }} </h3>
         <v-spacer></v-spacer>
         <v-spacer></v-spacer>
-        <v-text-field append-icon="search" v-model="search" @input="setSearch" single-line hide-details placeholder="Pesquisar"></v-text-field>
+        <v-text-field append-icon="search" v-model="search" @input="doSearch" single-line hide-details placeholder="Pesquisar"></v-text-field>
       </v-card-title>
 
       <!-- Tabela ou Formulário -->
@@ -19,7 +19,7 @@
       <v-card-actions>
         <v-spacer/>
         <v-btn v-show="pageType === 'LIST'" color="primary" @click="newItem">Novo</v-btn>
-        <v-btn v-show="pageType === 'FORM_NEW' || pageType === 'FORM_EDIT'" color="success">Salvar</v-btn>
+        <v-btn v-show="pageType === 'FORM_NEW' || pageType === 'FORM_EDIT'" color="success" @click="save">Salvar</v-btn>
         <v-btn v-show="pageType === 'FORM_NEW' || pageType === 'FORM_EDIT'" color="error" @click="cancel">Cancelar</v-btn>
       </v-card-actions>
     </v-card>
@@ -29,6 +29,7 @@
 
 <script>
 import Table from '../shared/Table'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   props: {
@@ -41,22 +42,36 @@ export default {
 
   data () {
     return {
-      pageType: 'LIST', // Este state precisa ser compartilhado pelo Vuex
       search: ''
     }
   },
 
+  computed: {
+    ...mapGetters([
+      'pageType'
+    ])
+  },
+
   methods: {
-    setSearch (event) {
-      this.$store.dispatch('setSearch', this.search)
+    ...mapActions([
+      'setSearch',
+      'setPageType'
+    ]),
+
+    doSearch () {
+      this.setSearch(this.search)
     },
 
     newItem () {
-      this.pageType = 'FORM_NEW'
+      this.setPageType('FORM_NEW')
     },
 
     cancel () {
-      this.pageType = 'LIST'
+      this.setPageType('LIST')
+    },
+
+    save () {
+      this.setPageType('LIST')
     },
 
     getPageTitle () {
