@@ -1,6 +1,7 @@
 <template>
   <v-data-table :headers="headers" :items="items" :search="search" rows-per-page-text="Itens por página"
-                :rows-per-page-items="[5, 10, 25, {text: 'Todos', value: -1}]">
+                :rows-per-page-items="[5, 10, 25, {text: 'Todos', value: -1}]"
+                 no-data-text="Nenhum item para ser exibido">
     <template slot="items" slot-scope="props">
       <td class="justify-center">{{ props.item.name }}</td>
       <td class="justify-center layout px-0">
