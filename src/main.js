@@ -8,6 +8,11 @@ import App from './App'
 import router from './router'
 import store from './store/store'
 
+import axios from 'axios'
+
+axios.defaults.baseURL = 'http://localhost:8081/sgf-api'
+axios.defaults.headers.get['Accepts'] = 'application/json'
+
 Vue.config.productionTip = false
 
 Vue.use(Vuetify)

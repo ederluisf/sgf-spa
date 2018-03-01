@@ -1,5 +1,6 @@
 import itemsTemp from '../../data/itemsTemp'
 import headersTemp from '../../data/headersTemp'
+import axios from 'axios'
 
 const state = {
   headers: [],
@@ -28,7 +29,18 @@ const actions = {
     commit('SET_HEADERS', headersTemp)
   },
   listItems: ({ commit }, items) => {
-    commit('SET_ITEMS', itemsTemp)
+    axios.get('/manufacturers')
+      .then(res => {
+        console.log(res)
+        // commit('SET_ITEMS', res.data)
+        commit('SET_ITEMS', itemsTemp)
+      })
+      .catch(error => console.error(error))
+  },
+  saveItem () {
+    axios.post('/manufacturers', {name: 'TESTE'})
+      .then(res => console.log(res))
+      .catch(error => console.log(error))
   },
   setSearch: ({ commit }, search) => {
     commit('SET_SEARCH', search)
