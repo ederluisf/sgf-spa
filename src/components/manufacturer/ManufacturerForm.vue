@@ -10,8 +10,8 @@
       </template>
 
       <template slot="clip-uploader-body" slot-scope="props">
-        <div v-for="file in props.files" :key="file.name">
-          <img v-bind:src="file.dataUrl" />
+        <div class="uploader-files" v-for="file in props.files" :key="file.name">
+          <img class="file-avatarw" v-bind:src="file.dataUrl" />
           {{ file.name }} {{ file.status }}
         </div>
       </template>
