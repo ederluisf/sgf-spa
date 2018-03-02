@@ -42,7 +42,7 @@
 
           <div v-else>
             <v-btn v-show="pageType === 'FORM_NEW' || pageType === 'FORM_EDIT'" color="success"
-                  @click="save">
+                   @click="save">
               Salvar
             </v-btn>
 

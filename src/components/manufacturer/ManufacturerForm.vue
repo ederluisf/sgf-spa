@@ -1,7 +1,8 @@
 <template>
   <form>
-    <v-text-field label="Name"></v-text-field>
-    <vue-dropzone ref="myVueDropzone"
+    <v-text-field label="Name" v-model="entity.name"></v-text-field>
+    <vue-dropzone v-model="entity.picture"
+                  ref="myVueDropzone"
                   id="dropzone"
                   @vdropzone-complete="teste"
                   :options="dropzoneOptions"
@@ -19,6 +20,11 @@ export default {
 
   data () {
     return {
+      entity: {
+        name: 'Eder',
+        picture: null
+      },
+
       dropzoneOptions: {
         url: 'http://httpbin.org/post',
         thumbnailWidth: 185,
