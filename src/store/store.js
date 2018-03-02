@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import layout from './modules/layout'
-import registration from './modules/registration'
+import layout from './modules/layoutStore'
+import registration from './modules/registrationStore'
 
 Vue.use(Vuex)
 
