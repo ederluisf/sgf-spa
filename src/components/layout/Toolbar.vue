@@ -2,7 +2,7 @@
     <v-toolbar color="blue darken-3" dark app fixed :clipped-left="$vuetify.breakpoint.mdAndUp">
     <v-toolbar-title class="ml-0 text-md-left text-sm-left text-xs-left">
       <v-toolbar-side-icon @click.stop="showMiniDrawer"></v-toolbar-side-icon>
-      <span class="hidden-sm-and-down">SGF</span>
+      <router-link to="/" tag="span" style="cursor: pointer" class="hidden-sm-and-down">SGF</router-link>
     </v-toolbar-title>
 
     <v-spacer></v-spacer>
