@@ -1,48 +1,48 @@
 <template>
-  <form>
-    <v-text-field label="Name" v-model="entity.name"></v-text-field>
-    <vue-dropzone v-model="entity.picture"
-                  ref="myVueDropzone"
-                  id="dropzone"
-                  @vdropzone-complete="teste"
-                  :options="dropzoneOptions"
-                  style="width: 260px;"/>
-  </form>
+  <v-flex>
+    <v-text-field label="Nome" v-model="entity.name" @blur="setValueIn('name', entity.name)"></v-text-field>
+    <app-simple-input-file fileAttributeName="logo" />
+  </v-flex>
 </template>
 
 <script>
-import vue2Dropzone from 'vue2-dropzone'
+import { mapGetters, mapActions } from 'vuex'
+import SimpleInputFile from '../shared/input-file/SimpleInputFile'
 
 export default {
   components: {
-    vueDropzone: vue2Dropzone
+    AppSimpleInputFile: SimpleInputFile
   },
 
   data () {
     return {
       entity: {
-        name: 'Eder',
-        picture: null
-      },
-
-      dropzoneOptions: {
-        url: 'http://httpbin.org/post',
-        thumbnailWidth: 185,
-        addRemoveLinks: true,
-        maxFilesize: 0.5,
-        maxFiles: 1,
-        thumbnailMethod: 'contain',
-        acceptedFiles: 'image/*',
-        dictDefaultMessage: 'Arraste arquivos aqui ou clique para selecionar uma imagem',
-        dictRemoveFile: 'Remover Imagem'
+        name: '',
+        logo: null
       }
     }
   },
 
+  computed: {
+    ...mapGetters({
+      file: 'file',
+      entityStore: 'entity'
+    })
+  },
+
   methods: {
-    teste (file) {
-      console.log(file)
-      console.log('Nome: ' + file.name)
+    ...mapActions([
+      'setEntity'
+    ]),
+
+    setValueIn (attribute, value) {
+      console.log(attribute + ' - ' + value)
+      const teste = {
+        [attribute]: value,
+        logo: this.file
+      }
+
+      this.setEntity(teste)
     }
   }
 }

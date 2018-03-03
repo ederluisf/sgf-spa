@@ -26,7 +26,7 @@
           enter-active-class="animated fadeIn"
           leave-active-class="animated fadeOut">
           <app-table v-if="pageType === 'LIST'" transition="slide-x-transition"></app-table>
-          <slot v-else name="form" transition="fade-transition"></slot>
+          <slot v-else name="form"></slot>
         </transition>
       </v-card-text>
 
@@ -42,7 +42,7 @@
 
           <div v-else>
             <v-btn v-show="pageType === 'FORM_NEW' || pageType === 'FORM_EDIT'" color="success"
-                   @click="save">
+                   @click="saveEntity">
               Salvar
             </v-btn>
 
@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import Table from '../shared/Table'
+import Table from '../shared/table/Table'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
@@ -78,14 +78,19 @@ export default {
 
   computed: {
     ...mapGetters([
-      'pageType'
+      'pageType',
+      'file',
+      'files',
+      'entity'
     ])
   },
 
   methods: {
     ...mapActions([
       'setSearch',
-      'setPageType'
+      'setPageType',
+      'setEntity',
+      'save'
     ]),
 
     doSearch () {
@@ -100,8 +105,9 @@ export default {
       this.setPageType('LIST')
     },
 
-    save () {
-      this.setPageType('LIST')
+    saveEntity () {
+      this.save(this.entity)
+      console.log('Dentro de Content: ' + this.entity.logo)
     }
   }
 }

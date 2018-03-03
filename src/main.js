@@ -10,7 +10,6 @@ import axios from 'axios'
 // CSS imports
 import 'vuetify/dist/vuetify.min.css'
 import 'animate.css/animate.min.css'
-import 'vue2-dropzone/dist/vue2Dropzone.css'
 
 axios.defaults.baseURL = 'http://localhost:8081/sgf-api'
 axios.defaults.headers.get['Accepts'] = 'application/json'
