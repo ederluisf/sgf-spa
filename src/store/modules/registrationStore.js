@@ -1,12 +1,13 @@
-import itemsTemp from '../../data/itemsTemp'
+// import itemsTemp from '../../data/itemsTemp'
 import headersTemp from '../../data/headersTemp'
 import axios from 'axios'
 
 const state = {
   headers: [],
   items: [],
-  entity: null,
+  entity: {},
   search: '',
+  url: '/',
   pageType: 'LIST'
 }
 
@@ -25,6 +26,9 @@ const mutations = {
   },
   'SET_PAGE_TYPE' (state, pageType) {
     state.pageType = pageType
+  },
+  'SET_URL' (state, url) {
+    state.url = url
   }
 }
 
@@ -32,36 +36,60 @@ const actions = {
   listHeaders: ({ commit }, headers) => {
     commit('SET_HEADERS', headersTemp)
   },
+
   listItems: ({ commit }, items) => {
     axios.get('/manufacturers')
       .then(res => {
         console.log(res)
-        // commit('SET_ITEMS', res.data)
-        commit('SET_ITEMS', itemsTemp)
+        commit('SET_ITEMS', res.data)
       })
       .catch(error => console.error(error))
   },
-  save ({ commit }, entity) {
-    console.log('>>>>>>>>>>>>>>>>>>>>>>>>> Em save da store ---> Name: ' + entity.name)
-    console.log('>>>>>>>>>>>>>>>>>>>>>>>>> Em save da store ---> Logo: ' + entity.logo)
-    axios.post('/manufacturers', entity)
+
+  save ({ commit, state }, entity) {
+    axios.post(state.url, entity)
       .then(res => {
         console.log(res)
         commit('SET_FILE', null)
         commit('SET_FILES', [])
         commit('SET_PAGE_TYPE', 'LIST')
       })
-      .catch(error => console.log(error))
+      .catch(error => {
+        if (error.response) {
+          console.log(error.response.status)
+          console.log(error.response.data.errors)
+        }
+        console.log(error.config)
+      })
   },
+
+  loadEntity ({ commit, state }, id) {
+    axios.get(state.url + '/' + id)
+      .then(res => {
+        console.log('RES.DATA: ' + JSON.stringify(res.data.data))
+
+        commit('SET_ENTITY', res.data.data)
+        commit('SET_PAGE_TYPE', 'FORM_EDIT')
+      })
+      .catch(error => {
+        console.log(error.response.data.errors)
+      })
+  },
+
   setSearch: ({ commit }, search) => {
     commit('SET_SEARCH', search)
   },
+
   setEntity: ({ commit }, entity) => {
-    console.log('>>>>>>>>>>>>>>>>>>>>>>> Em actions, Entidade: ' + entity.name + ' - Logotipo: ' + entity.logo)
     commit('SET_ENTITY', entity)
   },
+
   setPageType: ({ commit }, pageType) => {
     commit('SET_PAGE_TYPE', pageType)
+  },
+
+  setUrl: ({ commit }, url) => {
+    commit('SET_URL', url)
   }
 }
 
@@ -80,6 +108,9 @@ const getters = {
   },
   entity: state => {
     return state.entity
+  },
+  url: state => {
+    return state.url
   }
 }
 

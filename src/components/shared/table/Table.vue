@@ -6,7 +6,7 @@
       <td class="justify-center">{{ props.item.name }}</td>
       <td class="justify-center layout px-0">
         <v-tooltip bottom open-delay="1500">
-          <v-btn icon class="mx-0" @click="editItem(props.item)" slot="activator">
+          <v-btn icon class="mx-0" @click="edit(props.item)" slot="activator">
             <v-icon color="blue">edit</v-icon>
           </v-btn>
           <span>Editar</span>
@@ -45,11 +45,12 @@ export default {
 
   methods: {
     ...mapActions([
-      'setPageType'
+      'setPageType',
+      'loadEntity'
     ]),
 
-    editItem (item) {
-      this.setPageType('FORM_EDIT')
+    edit (entity) {
+      this.loadEntity(entity.id)
     }
   }
 }

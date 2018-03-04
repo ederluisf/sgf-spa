@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import Content from '../layout/Content'
 import ManufacturerForm from './ManufacturerForm'
 
@@ -12,6 +13,16 @@ export default {
   components: {
     appContent: Content,
     appManufacturerForm: ManufacturerForm
+  },
+
+  methods: {
+    ...mapActions([
+      'setUrl'
+    ])
+  },
+
+  created () {
+    this.setUrl('/manufacturers')
   }
 }
 </script>

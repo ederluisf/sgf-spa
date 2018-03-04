@@ -107,7 +107,6 @@ export default {
 
     saveEntity () {
       this.save(this.entity)
-      console.log('Dentro de Content: ' + this.entity.logo)
     }
   }
 }

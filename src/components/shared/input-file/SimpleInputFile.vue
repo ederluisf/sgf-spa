@@ -12,85 +12,39 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
-
 export default {
   data () {
     return {
       imageName: '',
-      imageUrl: '',
-      imageFile: ''
+      imageUrl: ''
     }
   },
 
-  props: {
-    fileAttributeName: ''
-  },
-
-  computed: {
-    ...mapGetters([
-      'file',
-      'files',
-      'entity'
-    ])
-  },
-
   methods: {
-    ...mapActions([
-      'setFile',
-      'setEntity'
-    ]),
-
     pickFile () {
       this.$refs.image.click()
     },
 
-    /* No tutorial de obter um byte[] da imagem estava ensinando com readAsArrayBuffer
-    Porém com readAsDataURL também salvou.
-    Então agora preciso listar corretamente e tentar reexibir na edição
-    Caso Não exiba a imagem, tentar salvar com readAsArrayBuffer e testar novamente */
-
     onFilePicked (e) {
       const files = e.target.files
+      const file = files[0]
 
-      if (files[0] !== undefined) {
-        this.imageName = files[0].name
-
+      if (file !== undefined) {
+        this.$emit('getFile', file) // Return file to de parent component
+        this.imageName = file.name
         if (this.imageName.lastIndexOf('.') <= 0) { return }
 
         const fileReader = new FileReader()
-        const fileByteArray = []
-
-        fileReader.readAsDataURL(files[0])
+        fileReader.readAsDataURL(file)
 
         fileReader.addEventListener('load', () => {
           this.imageUrl = fileReader.result
-          this.imageFile = files[0]
-
-          let array = new Uint8Array(this.imageUrl)
-
-          for (var i = 0; i < array.length; i++) {
-            fileByteArray.push(array[i])
-          }
-
-          this.setFile(fileByteArray)
-          this.entity[this.fileAttributeName] = fileByteArray
-          this.setEntity(this.entity)
-          console.log('The fileAttributeName is : ' + this.fileAttributeName)
-          console.log('No onFilePicked: ' + this.file)
-          console.log('Entity from vuex: ' + this.entity)
-          console.log('>>>>>>> Result: ' + fileByteArray)
         })
       } else {
         this.imageName = ''
-        this.imageFile = ''
         this.imageUrl = ''
       }
     }
   }
 }
 </script>
-
-<style scoped>
-
-</style>
