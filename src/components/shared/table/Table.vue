@@ -2,8 +2,11 @@
   <v-data-table :headers="headers" :items="items" :search="search" rows-per-page-text="Itens por página"
                 :rows-per-page-items="[5, 10, 25, {text: 'Todos', value: -1}]"
                  no-data-text="Nenhum item para ser exibido">
+
     <template slot="items" slot-scope="props">
       <td class="justify-center">{{ props.item.name }}</td>
+      <td class="justify-center">{{ props.item.name }}</td>
+
       <td class="justify-center layout px-0">
         <v-tooltip bottom open-delay="1500">
           <v-btn icon class="mx-0" @click="edit(props.item)" slot="activator">
@@ -11,6 +14,7 @@
           </v-btn>
           <span>Editar</span>
         </v-tooltip>
+
         <v-tooltip bottom open-delay="1500">
           <v-btn icon class="mx-0" @click="deleteItem(props.item)" slot="activator">
             <v-icon color="red">delete_forever</v-icon>
