@@ -2,23 +2,38 @@
   <v-flex>
     <v-text-field label="Nome" v-model="entity.name" @blur="setValueIn('name', entity.name)"></v-text-field>
     <app-simple-input-file @getFile="getFile" />
+
+    <dropzone ref="myVueDropzone" id="dropzone"
+                  :options="dropzoneOptions"
+                  @vdropzone-file-added="teste"> </dropzone>
+
   </v-flex>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import SimpleInputFile from '../shared/input-file/SimpleInputFile'
+import vue2Dropzone from 'vue2-dropzone'
 import FileUtils from '../utils/FileUtils'
 
 export default {
   components: {
-    AppSimpleInputFile: SimpleInputFile
+    AppSimpleInputFile: SimpleInputFile,
+    Dropzone: vue2Dropzone
   },
 
   data () {
     return {
       name: '',
-      logo: null
+      logo: null,
+      dropzoneOptions: {
+        url: 'http://localhost:8081/sgf-api/file-upload',
+        thumbnailWidth: 150,
+        maxFilesize: 0.5,
+        addRemoveLinks: true,
+        thumbnailMethod: 'contain',
+        headers: { 'My-Awesome-Header': 'header value' }
+      }
     }
   },
 
@@ -49,6 +64,12 @@ export default {
 
     setValueIn (attribute, value) {
       this.entity[attribute] = value
+    },
+
+    teste (file2) {
+      console.log('Arquivo: ' + JSON.stringify(file2))
+      this.entity.file = file2
+      console.log('Entidade: ' + this.entity)
     }
   },
 
