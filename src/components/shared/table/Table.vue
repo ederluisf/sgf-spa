@@ -5,7 +5,6 @@
 
     <template slot="items" slot-scope="props">
       <td class="justify-center">{{ props.item.name }}</td>
-      <td class="justify-center">{{ props.item.name }}</td>
 
       <td class="justify-center layout px-0">
         <v-tooltip bottom open-delay="1500">

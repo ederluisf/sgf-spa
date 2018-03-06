@@ -1,11 +1,19 @@
 <template>
   <v-flex>
     <v-text-field label="Nome" v-model="entity.name" @blur="setValueIn('name', entity.name)"></v-text-field>
-    <app-simple-input-file @getFile="getFile" />
 
-    <dropzone ref="myVueDropzone" id="dropzone"
-                  :options="dropzoneOptions"
-                  @vdropzone-file-added="teste"> </dropzone>
+    <!-- <app-simple-input-file @getFile="getFile" /> -->
+
+    <v-layout>
+
+    <v-flex md4 sm12 xs12>
+      <dropzone ref="myDropzone" id="dropzone"
+                    :options="dropzoneOptions"
+                    @vdropzone-file-added="fileAdded"
+                    @vdropzone-mounted="dropzoneMounted">
+      </dropzone>
+    </v-flex>
+    </v-layout>
 
   </v-flex>
 </template>
@@ -28,11 +36,13 @@ export default {
       logo: null,
       dropzoneOptions: {
         url: 'http://localhost:8081/sgf-api/file-upload',
-        thumbnailWidth: 150,
-        maxFilesize: 0.5,
+        maxFilesize: 1,
+        acceptedFiles: 'image/*',
         addRemoveLinks: true,
+        thumbnailWidth: 270,
         thumbnailMethod: 'contain',
-        headers: { 'My-Awesome-Header': 'header value' }
+        maxFiles: 1,
+        dictDefaultMessage: 'Arraste uma imagem aqui ou clique para escolher'
       }
     }
   },
@@ -52,7 +62,26 @@ export default {
       'setUrl'
     ]),
 
-    getFile (fileUploaded) {
+    /* Tentar fazer parar de lançar o erro ao se editar uma montadora
+    Apagar o componente SimpleInputFile
+    Implementar a funcionalidade de remover uma entidade
+    Fazer com que as colunas da tabela sejam dinamicas (Ver projeto AdminFy) */
+
+    /* getFile (fileUploaded) {
+      FileUtils.getByteArrayFrom(fileUploaded)
+        .then(byteArray => {
+          this.setFile(byteArray)
+          this.entity['logo'] = this.file
+          console.log('Entidade: ' + JSON.stringify(this.entity))
+        })
+        .catch(error => console.log('ERRO: ' + error))
+    }, */
+
+    setValueIn (attribute, value) {
+      this.entity[attribute] = value
+    },
+
+    fileAdded (fileUploaded) {
       FileUtils.getByteArrayFrom(fileUploaded)
         .then(byteArray => {
           this.setFile(byteArray)
@@ -62,19 +91,19 @@ export default {
         .catch(error => console.log('ERRO: ' + error))
     },
 
-    setValueIn (attribute, value) {
-      this.entity[attribute] = value
-    },
-
-    teste (file2) {
-      console.log('Arquivo: ' + JSON.stringify(file2))
-      this.entity.file = file2
-      console.log('Entidade: ' + this.entity)
+    dropzoneMounted () {
+      console.log('The Dropzone is mounted!!')
+      let b64toBlob = require('b64-to-blob')
+      let contentType = 'image/png'
+      let blob = b64toBlob(this.entity.logo, contentType)
+      let blobUrl = URL.createObjectURL(blob)
+      let file = { size: 512, name: 'Logotipo' }
+      this.$refs.myDropzone.manuallyAddFile(file, blobUrl)
     }
   },
 
   created () {
-    console.log('Entidade: ' + JSON.stringify(this.entity))
+    /* console.log('Entidade: ' + JSON.stringify(this.entity)) */
   }
 }
 </script>

@@ -47,26 +47,40 @@ const actions = {
   },
 
   save ({ commit, state }, entity) {
-    axios.post(state.url, entity)
-      .then(res => {
-        console.log(res)
-        commit('SET_FILE', null)
-        commit('SET_FILES', [])
-        commit('SET_PAGE_TYPE', 'LIST')
-      })
-      .catch(error => {
-        if (error.response) {
-          console.log(error.response.status)
-          console.log(error.response.data.errors)
-        }
-        console.log(error.config)
-      })
+    if (!entity.id) {
+      axios.post(state.url, entity)
+        .then(res => {
+          console.log(res)
+        })
+        .catch(error => {
+          if (error.response) {
+            console.log(error.response.status)
+            console.log(error.response.data.errors)
+          }
+          console.log(error.config)
+        })
+    } else {
+      axios.put(`${state.url}/${entity.id}`, entity)
+        .then(res => {
+          console.log(res)
+        })
+        .catch(error => {
+          if (error.response) {
+            console.log(error.response.status)
+            console.log(error.response.data.errors)
+          }
+        })
+    }
+    commit('SET_ENTITY', {})
+    commit('SET_FILE', null)
+    commit('SET_FILES', [])
+    commit('SET_PAGE_TYPE', 'LIST')
   },
 
   loadEntity ({ commit, state }, id) {
     axios.get(state.url + '/' + id)
       .then(res => {
-        console.log('RES.DATA: ' + JSON.stringify(res.data.data))
+        /* console.log('RES.DATA: ' + JSON.stringify(res.data.data)) */
 
         commit('SET_ENTITY', res.data.data)
         commit('SET_PAGE_TYPE', 'FORM_EDIT')
