@@ -6,6 +6,10 @@
     <template slot="items" slot-scope="props">
       <td class="justify-center">{{ props.item.name }}</td>
 
+      <td :class="header.left ? '' : 'text-xs-right'" v-for="header in headers" :key="header.id">
+        {{ getColumnData(props.item, header.value) }}
+      </td>
+
       <td class="justify-center layout px-0">
         <v-tooltip bottom open-delay="1500">
           <v-btn icon class="mx-0" @click="edit(props.item)" slot="activator">
@@ -51,6 +55,16 @@ export default {
       'setPageType',
       'loadEntity'
     ]),
+
+    getColumnData (row, field) {
+      // process fields like `type.name`
+      let [l1, l2] = field.split('.')
+      if (l2) {
+        return row[l1] ? row[l1][l2] : null
+      } else {
+        return row[l1]
+      }
+    },
 
     edit (entity) {
       this.loadEntity(entity.id)

@@ -1,4 +1,3 @@
-// import itemsTemp from '../../data/itemsTemp'
 import headersTemp from '../../data/headersTemp'
 import axios from 'axios'
 
@@ -37,7 +36,7 @@ const actions = {
     commit('SET_HEADERS', headersTemp)
   },
 
-  listItems: ({ commit }, items) => {
+  listItems: ({ commit }) => {
     axios.get('/manufacturers')
       .then(res => {
         console.log(res)
@@ -52,24 +51,13 @@ const actions = {
         .then(res => {
           console.log(res)
         })
-        .catch(error => {
-          if (error.response) {
-            console.log(error.response.status)
-            console.log(error.response.data.errors)
-          }
-          console.log(error.config)
-        })
+        .catch(error => getErrors(error))
     } else {
       axios.put(`${state.url}/${entity.id}`, entity)
         .then(res => {
           console.log(res)
         })
-        .catch(error => {
-          if (error.response) {
-            console.log(error.response.status)
-            console.log(error.response.data.errors)
-          }
-        })
+        .catch(error => getErrors(error))
     }
     commit('SET_ENTITY', {})
     commit('SET_FILE', null)
@@ -80,14 +68,18 @@ const actions = {
   loadEntity ({ commit, state }, id) {
     axios.get(state.url + '/' + id)
       .then(res => {
-        /* console.log('RES.DATA: ' + JSON.stringify(res.data.data)) */
-
         commit('SET_ENTITY', res.data.data)
         commit('SET_PAGE_TYPE', 'FORM_EDIT')
       })
-      .catch(error => {
-        console.log(error.response.data.errors)
+      .catch(error => getErrors(error))
+  },
+
+  delete ({ commit, state }, id) {
+    axios.delete(state.url + '/' + id)
+      .then(res => {
+        this.listItems()
       })
+      .then(error => getErrors(error))
   },
 
   setSearch: ({ commit }, search) => {
@@ -133,4 +125,12 @@ export default {
   mutations,
   actions,
   getters
+}
+
+function getErrors (error) {
+  if (error.response) {
+    console.log(error.response.status)
+    console.log(error.response.data.errors)
+  }
+  console.log(error.config)
 }

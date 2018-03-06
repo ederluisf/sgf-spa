@@ -2,17 +2,14 @@
   <v-flex>
     <v-text-field label="Nome" v-model="entity.name" @blur="setValueIn('name', entity.name)"></v-text-field>
 
-    <!-- <app-simple-input-file @getFile="getFile" /> -->
-
     <v-layout>
-
-    <v-flex md4 sm12 xs12>
-      <dropzone ref="myDropzone" id="dropzone"
-                    :options="dropzoneOptions"
-                    @vdropzone-file-added="fileAdded"
-                    @vdropzone-mounted="dropzoneMounted">
-      </dropzone>
-    </v-flex>
+      <v-flex md4 sm12 xs12>
+        <dropzone ref="myDropzone" id="dropzone"
+                      :options="dropzoneOptions"
+                      @vdropzone-file-added="fileAdded"
+                      @vdropzone-mounted="dropzoneMounted">
+        </dropzone>
+      </v-flex>
     </v-layout>
 
   </v-flex>
@@ -20,13 +17,11 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import SimpleInputFile from '../shared/input-file/SimpleInputFile'
 import vue2Dropzone from 'vue2-dropzone'
 import FileUtils from '../utils/FileUtils'
 
 export default {
   components: {
-    AppSimpleInputFile: SimpleInputFile,
     Dropzone: vue2Dropzone
   },
 
@@ -66,16 +61,6 @@ export default {
     Apagar o componente SimpleInputFile
     Implementar a funcionalidade de remover uma entidade
     Fazer com que as colunas da tabela sejam dinamicas (Ver projeto AdminFy) */
-
-    /* getFile (fileUploaded) {
-      FileUtils.getByteArrayFrom(fileUploaded)
-        .then(byteArray => {
-          this.setFile(byteArray)
-          this.entity['logo'] = this.file
-          console.log('Entidade: ' + JSON.stringify(this.entity))
-        })
-        .catch(error => console.log('ERRO: ' + error))
-    }, */
 
     setValueIn (attribute, value) {
       this.entity[attribute] = value
