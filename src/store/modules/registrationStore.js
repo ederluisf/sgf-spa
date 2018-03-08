@@ -81,8 +81,9 @@ const actions = {
 
     axios.delete(state.url + '/' + entity.id)
       .then(res => {
-        console.log('Deletando: ' + JSON.stringify(res.data.data))
+        console.log('Deletando: ' + JSON.stringify(entity.name))
         console.log('Itens: ' + JSON.stringify(state.items))
+        console.log('Resposta do Servidor: ' + JSON.stringify(res))
         commit('REMOVE_ITEM', entity)
         debugger
       })
