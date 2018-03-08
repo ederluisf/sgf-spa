@@ -39,7 +39,6 @@ const actions = {
   listItems: ({ commit }) => {
     axios.get('/manufacturers')
       .then(res => {
-        console.log(res)
         commit('SET_ITEMS', res.data)
       })
       .catch(error => console.error(error))
@@ -74,10 +73,11 @@ const actions = {
       .catch(error => getErrors(error))
   },
 
-  delete ({ commit, state }, id) {
-    axios.delete(state.url + '/' + id)
+  delete ({ commit, state }, entity) {
+    axios.delete(state.url + '/' + entity.id)
       .then(res => {
-        this.listItems()
+        console.log('Deletando: ' + JSON.stringify(res.data))
+        console.log('Itens: ' + this.items)
       })
       .then(error => getErrors(error))
   },

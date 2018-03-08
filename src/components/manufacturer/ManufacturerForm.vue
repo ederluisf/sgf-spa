@@ -28,7 +28,6 @@ export default {
   data () {
     return {
       name: '',
-      logo: null,
       dropzoneOptions: {
         url: 'http://localhost:8081/sgf-api/file-upload',
         maxFilesize: 1,
@@ -67,23 +66,25 @@ export default {
     },
 
     fileAdded (fileUploaded) {
-      FileUtils.getByteArrayFrom(fileUploaded)
-        .then(byteArray => {
-          this.setFile(byteArray)
-          this.entity['logo'] = this.file
-          console.log('Entidade: ' + JSON.stringify(this.entity))
-        })
-        .catch(error => console.log('ERRO: ' + error))
+      if (!fileUploaded.manuallyAdded) {
+        FileUtils.getByteArrayFrom(fileUploaded)
+          .then(byteArray => {
+            this.setFile(byteArray)
+            this.entity['logo'] = this.file
+          })
+          .catch(error => console.log('ERRO: ' + error))
+      }
     },
 
     dropzoneMounted () {
-      console.log('The Dropzone is mounted!!')
-      let b64toBlob = require('b64-to-blob')
-      let contentType = 'image/png'
-      let blob = b64toBlob(this.entity.logo, contentType)
-      let blobUrl = URL.createObjectURL(blob)
-      let file = { size: 512, name: 'Logotipo' }
-      this.$refs.myDropzone.manuallyAddFile(file, blobUrl)
+      if (this.entity.logo) {
+        let b64toBlob = require('b64-to-blob')
+        let contentType = 'image/png'
+        let blob = b64toBlob(this.entity.logo, contentType)
+        let blobUrl = URL.createObjectURL(blob)
+        let file = { size: 512, name: 'Logotipo' }
+        this.$refs.myDropzone.manuallyAddFile(file, blobUrl)
+      }
     }
   },
 

@@ -98,6 +98,7 @@ export default {
     },
 
     newItem () {
+      this.setEntity({})
       this.setPageType('FORM_NEW')
     },
 
