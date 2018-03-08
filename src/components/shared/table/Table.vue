@@ -33,7 +33,7 @@
         </v-tooltip>
 
         <v-tooltip bottom open-delay="1500">
-          <v-btn icon class="mx-0" @click="deleteItem(props.item)" slot="activator">
+          <v-btn icon class="mx-0" @click="deleteEntity(props.item)" slot="activator">
             <v-icon color="red">delete_forever</v-icon>
           </v-btn>
           <span>Remover</span>
@@ -76,7 +76,7 @@ export default {
     ...mapActions([
       'setPageType',
       'loadEntity',
-      'delete'
+      'deleteItem'
     ]),
 
     getColumnData (row, field) {
@@ -105,10 +105,11 @@ export default {
       this.loadEntity(entity.id)
     },
 
-    deleteItem (entity) {
+    deleteEntity (entity) {
       console.log('Deletando o item: ' + entity.name)
-      console.log(this.items)
-      this.delete(entity)
+      console.log('Items cadastrados' + this.items)
+      debugger
+      this.deleteItem(entity)
     }
   }
 }

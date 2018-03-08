@@ -28,6 +28,9 @@ const mutations = {
   },
   'SET_URL' (state, url) {
     state.url = url
+  },
+  'REMOVE_ITEM' (state, entity) {
+    state.items.splice(entity, 1)
   }
 }
 
@@ -73,13 +76,17 @@ const actions = {
       .catch(error => getErrors(error))
   },
 
-  delete ({ commit, state }, entity) {
+  deleteItem ({ commit, state }, entity) {
+    console.log('Passei no deleteItem da Store')
+
     axios.delete(state.url + '/' + entity.id)
       .then(res => {
-        console.log('Deletando: ' + JSON.stringify(res.data))
-        console.log('Itens: ' + this.items)
+        console.log('Deletando: ' + JSON.stringify(res.data.data))
+        console.log('Itens: ' + JSON.stringify(state.items))
+        commit('REMOVE_ITEM', entity)
+        debugger
       })
-      .then(error => getErrors(error))
+      .catch(error => console.log('Erro ao deletar: ' + error))
   },
 
   setSearch: ({ commit }, search) => {
