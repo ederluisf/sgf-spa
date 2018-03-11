@@ -1,59 +1,76 @@
 <template>
-  <v-data-table :headers="headers" :items="items" :search="search" rows-per-page-text="Itens por página"
-                :rows-per-page-items="[5, 10, 25, {text: 'Todos', value: -1}]"
-                :pagination.sync="pagination" item-key="id"
-                no-data-text="Nenhum item para ser exibido">
+  <v-flex>
+    <v-data-table :headers="headers" :items="items" :search="search" rows-per-page-text="Itens por página"
+                  :rows-per-page-items="[5, 10, 25, {text: 'Todos', value: -1}]"
+                  :pagination.sync="pagination" item-key="id">
 
-      <template slot="headers" slot-scope="props">
-        <tr>
-          <th v-for="header in props.headers"
-              :key="header.id"
-              :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
-              @click="changeSort(header.value)" >
-            <v-icon small>arrow_upward</v-icon>
-            {{ header.text }}
-          </th>
-          <th class="text-md-right">
-            <span>Ações</span>
-          </th>
-        </tr>
+        <template slot="headers" slot-scope="props">
+          <tr>
+            <th v-for="header in headers"
+                :key="header.id"
+                :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
+                @click="changeSort(header.value)" >
+              <v-icon small>arrow_upward</v-icon>
+              {{ header.text }}
+            </th>
+            <th class="text-md-right">
+              <span>Ações</span>
+            </th>
+          </tr>
+        </template>
+
+      <template slot="items" slot-scope="props">
+        <td :class="header.left ? '' : 'text-xs-right text-md-right'" v-for="header in headers" :key="header.id">
+            {{ getColumnData(props.item, header.value) }}
+        </td>
+
+        <td class="justify-end layout px-0">
+          <v-tooltip bottom open-delay="1500">
+            <v-btn icon class="mx-0" @click="edit(props.item)" slot="activator">
+              <v-icon color="blue">edit</v-icon>
+            </v-btn>
+            <span>Editar</span>
+          </v-tooltip>
+
+          <v-tooltip bottom open-delay="1500">
+            <v-btn icon class="mx-0" @click.stop="doShowConfirmDialog(true, props.item)" slot="activator">
+              <v-icon color="red">delete_forever</v-icon>
+            </v-btn>
+            <span>Remover</span>
+          </v-tooltip>
+        </td>
       </template>
 
-    <template slot="items" slot-scope="props">
-      <td :class="header.left ? '' : 'text-xs-right text-md-right'" v-for="header in headers" :key="header.id">
-        {{ getColumnData(props.item, header.value) }}
-      </td>
+      <template slot="no-data" :value="true">
+        <v-layout align-center>
+          <v-icon color="red">warning</v-icon>
+          <h3>&nbsp; Nenhum item para ser exibido.</h3>
+        </v-layout>
+      </template>
 
-      <td class="justify-end layout px-0">
-        <v-tooltip bottom open-delay="1500">
-          <v-btn icon class="mx-0" @click="edit(props.item)" slot="activator">
-            <v-icon color="blue">edit</v-icon>
-          </v-btn>
-          <span>Editar</span>
-        </v-tooltip>
+      <template slot="no-results" :value="true">
+        <v-layout align-center>
+          <v-icon color="red">warning</v-icon>
+          <h3>&nbsp; Sua pesquisa por "<span style="color: red">{{ search }}</span>" não retornou resultados.</h3>
+        </v-layout>
+      </template>
+    </v-data-table>
 
-        <v-tooltip bottom open-delay="1500">
-          <v-btn icon class="mx-0" @click="deleteEntity(props.item)" slot="activator">
-            <v-icon color="red">delete_forever</v-icon>
-          </v-btn>
-          <span>Remover</span>
-        </v-tooltip>
-      </td>
-    </template>
-
-    <v-alert slot="no-results" :value="true" color="error" icon="warning">
-      Sua pesquisa por "{{ search }}" não retornou resultados.
-    </v-alert>
-  </v-data-table>
+    <app-confirm title="Confirme: " message="Tem certeza que deseja remover este item?" @confirmed="deleteEntity" />
+  </v-flex>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import ConfirmDialog from '../dialog/ConfirmDialog'
 
 export default {
   created () {
-    this.$store.dispatch('listHeaders')
     this.$store.dispatch('listItems')
+  },
+
+  components: {
+    appConfirm: ConfirmDialog
   },
 
   data () {
@@ -68,7 +85,8 @@ export default {
     ...mapGetters([
       'headers',
       'items',
-      'search'
+      'search',
+      'showConfirmDialog'
     ])
   },
 
@@ -76,8 +94,23 @@ export default {
     ...mapActions([
       'setPageType',
       'loadEntity',
-      'deleteItem'
+      'deleteItem',
+      'setShowConfirmDialog'
     ]),
+
+    edit (entity) {
+      this.loadEntity(entity.id)
+    },
+
+    deleteEntity () {
+      this.deleteItem()
+    },
+
+    doShowConfirmDialog (show, entity) {
+      this.setShowConfirmDialog({
+        show, entity
+      })
+    },
 
     getColumnData (row, field) {
       // process fields like `type.name`
@@ -99,17 +132,6 @@ export default {
         this.pagination.sortBy = column
         this.pagination.descending = false
       }
-    },
-
-    edit (entity) {
-      this.loadEntity(entity.id)
-    },
-
-    deleteEntity (entity) {
-      console.log('Deletando o item: ' + entity.name)
-      console.log('Items cadastrados' + this.items)
-      debugger
-      this.deleteItem(entity)
     }
   }
 }

@@ -56,11 +56,6 @@ export default {
       'setUrl'
     ]),
 
-    /* Tentar fazer parar de lançar o erro ao se editar uma montadora
-    Apagar o componente SimpleInputFile
-    Implementar a funcionalidade de remover uma entidade
-    Fazer com que as colunas da tabela sejam dinamicas (Ver projeto AdminFy) */
-
     setValueIn (attribute, value) {
       this.entity[attribute] = value
     },

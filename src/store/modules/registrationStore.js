@@ -1,4 +1,3 @@
-import headersTemp from '../../data/headersTemp'
 import axios from 'axios'
 
 const state = {
@@ -7,7 +6,8 @@ const state = {
   entity: {},
   search: '',
   url: '/',
-  pageType: 'LIST'
+  pageType: 'LIST',
+  showConfirmDialog: false
 }
 
 const mutations = {
@@ -29,18 +29,22 @@ const mutations = {
   'SET_URL' (state, url) {
     state.url = url
   },
+  'SET_SHOW_CONFIRM_DIALOG' (state, showConfirmDialog) {
+    state.showConfirmDialog = showConfirmDialog
+  },
   'REMOVE_ITEM' (state, entity) {
-    state.items.splice(entity, 1)
+    const index = state.items.indexOf(entity)
+    state.items.splice(index, 1)
   }
 }
 
 const actions = {
   listHeaders: ({ commit }, headers) => {
-    commit('SET_HEADERS', headersTemp)
+    commit('SET_HEADERS', headers)
   },
 
-  listItems: ({ commit }) => {
-    axios.get('/manufacturers')
+  listItems: ({ commit, state }) => {
+    axios.get(state.url)
       .then(res => {
         commit('SET_ITEMS', res.data)
       })
@@ -51,13 +55,11 @@ const actions = {
     if (!entity.id) {
       axios.post(state.url, entity)
         .then(res => {
-          console.log(res)
         })
         .catch(error => getErrors(error))
     } else {
       axios.put(`${state.url}/${entity.id}`, entity)
         .then(res => {
-          console.log(res)
         })
         .catch(error => getErrors(error))
     }
@@ -76,18 +78,13 @@ const actions = {
       .catch(error => getErrors(error))
   },
 
-  deleteItem ({ commit, state }, entity) {
-    console.log('Passei no deleteItem da Store')
-
-    axios.delete(state.url + '/' + entity.id)
+  deleteItem ({ commit, state }) {
+    axios.delete(state.url + '/' + state.entity.id)
       .then(res => {
-        console.log('Deletando: ' + JSON.stringify(entity.name))
-        console.log('Itens: ' + JSON.stringify(state.items))
-        console.log('Resposta do Servidor: ' + JSON.stringify(res))
-        commit('REMOVE_ITEM', entity)
-        debugger
       })
       .catch(error => console.log('Erro ao deletar: ' + error))
+
+    commit('REMOVE_ITEM', state.entity)
   },
 
   setSearch: ({ commit }, search) => {
@@ -100,6 +97,11 @@ const actions = {
 
   setPageType: ({ commit }, pageType) => {
     commit('SET_PAGE_TYPE', pageType)
+  },
+
+  setShowConfirmDialog: ({ commit }, payload) => {
+    commit('SET_SHOW_CONFIRM_DIALOG', payload.show)
+    commit('SET_ENTITY', payload.entity)
   },
 
   setUrl: ({ commit }, url) => {
@@ -125,6 +127,9 @@ const getters = {
   },
   url: state => {
     return state.url
+  },
+  showConfirmDialog: state => {
+    return state.showConfirmDialog
   }
 }
 

@@ -8,6 +8,7 @@
 import { mapActions } from 'vuex'
 import Content from '../layout/Content'
 import ManufacturerForm from './ManufacturerForm'
+import manufacturerHeaders from '../../data/manufacturerHeaders'
 
 export default {
   components: {
@@ -17,12 +18,14 @@ export default {
 
   methods: {
     ...mapActions([
-      'setUrl'
+      'setUrl',
+      'listHeaders'
     ])
   },
 
   created () {
     this.setUrl('/manufacturers')
+    this.listHeaders(manufacturerHeaders)
   }
 }
 </script>

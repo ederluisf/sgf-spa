@@ -25,7 +25,7 @@
           appear mode="out-in"
           enter-active-class="animated fadeIn"
           leave-active-class="animated fadeOut">
-          <app-table v-if="pageType === 'LIST'" transition="slide-x-transition"></app-table>
+          <app-table v-if="pageType === 'LIST'"></app-table>
           <slot v-else name="form"></slot>
         </transition>
       </v-card-text>

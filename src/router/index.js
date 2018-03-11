@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import ManufacturerList from '@/components/manufacturer/ManufacturerList'
+import ManufacturerWrapper from '@/components/manufacturer/ManufacturerWrapper'
 
 Vue.use(Router)
 
@@ -10,7 +10,7 @@ export default new Router({
     {
       path: '/manufacturer',
       name: 'manufacturer',
-      component: ManufacturerList
+      component: ManufacturerWrapper
     }
   ]
 })
