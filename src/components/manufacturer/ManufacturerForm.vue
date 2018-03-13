@@ -27,7 +27,6 @@ export default {
 
   data () {
     return {
-      name: '',
       dropzoneOptions: {
         url: 'http://localhost:8081/sgf-api/file-upload',
         maxFilesize: 1,
@@ -81,10 +80,6 @@ export default {
         this.$refs.myDropzone.manuallyAddFile(file, blobUrl)
       }
     }
-  },
-
-  created () {
-    /* console.log('Entidade: ' + JSON.stringify(this.entity)) */
   }
 }
 </script>

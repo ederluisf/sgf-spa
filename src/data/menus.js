@@ -4,7 +4,7 @@ export default [
     title: 'Cadastros',
     subMenus: [
       { title: 'Montadoras', action: 'build', route: 'manufacturer' },
-      { title: 'Modelos', action: 'directions_car', route: 'model' },
+      { title: 'Modelos', action: 'description', route: 'model' },
       { title: 'Veículos', action: 'directions_car', route: 'vehicle' }
     ]
   },
