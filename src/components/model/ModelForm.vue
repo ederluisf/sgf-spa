@@ -4,10 +4,10 @@
       <v-flex md4 xs12>
         <v-select
           :items="manufacturers"
-          v-model="model.manufacturer"
+          v-model="manufacturerId"
+          @change="setManufacturer"
           label="Selecione"
           placeholder="Montadora"
-          class="input-group--focused"
           item-value="id"
           item-text="name">
         </v-select>
@@ -15,7 +15,7 @@
 
       <v-flex md4 xs12>
         <v-text-field
-          value="model.name"
+          v-model="entity.name"
           label="Nome"
           id="name">
         </v-text-field>
@@ -23,7 +23,7 @@
 
       <v-flex md4 xs12>
         <v-text-field
-          value="model.version"
+          v-model="entity.version"
           label="Versão"
           id="version">
         </v-text-field>
@@ -38,24 +38,25 @@ import { mapActions, mapGetters } from 'vuex'
 export default {
   data () {
     return {
-      model: { // trocar model para entity e setar os valores em entity
-        manufacturerId: null,
-        name: '',
-        version: ''
-      }
+      manufacturerId: null
     }
   },
 
   computed: {
     ...mapGetters([
-      'manufacturers'
+      'manufacturers',
+      'entity'
     ])
   },
 
   methods: {
     ...mapActions([
       'listManufacturers'
-    ])
+    ]),
+
+    setManufacturer (idManufacturer) {
+      this.entity.manufacturer = { id: idManufacturer }
+    }
   },
 
   created () {

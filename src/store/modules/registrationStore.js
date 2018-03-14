@@ -46,27 +46,29 @@ const actions = {
   listItems: ({ commit, state }) => {
     axios.get(state.url)
       .then(res => {
+        console.log('ITEMS: ' + JSON.stringify(res.data))
         commit('SET_ITEMS', res.data)
       })
       .catch(error => console.error(error))
   },
 
   save ({ commit, state }, entity) {
+    console.log('Tentanto salvar: ' + JSON.stringify(entity))
     if (!entity.id) {
       axios.post(state.url, entity)
         .then(res => {
+          resetValues(commit)
+          commit('SET_PAGE_TYPE', 'LIST')
         })
         .catch(error => getErrors(error))
     } else {
       axios.put(`${state.url}/${entity.id}`, entity)
         .then(res => {
+          resetValues(commit)
+          commit('SET_PAGE_TYPE', 'LIST')
         })
         .catch(error => getErrors(error))
     }
-    commit('SET_ENTITY', {})
-    commit('SET_FILE', null)
-    commit('SET_FILES', [])
-    commit('SET_PAGE_TYPE', 'LIST')
   },
 
   loadEntity ({ commit, state }, id) {
@@ -146,4 +148,10 @@ function getErrors (error) {
     console.log(error.response.data.errors)
   }
   console.log(error.config)
+}
+
+function resetValues (commit) {
+  commit('SET_ENTITY', {})
+  commit('SET_FILE', null)
+  commit('SET_FILES', [])
 }
