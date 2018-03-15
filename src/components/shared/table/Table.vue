@@ -20,7 +20,7 @@
         </template>
 
       <template slot="items" slot-scope="props">
-        <td :class="header.left ? '' : 'text-xs-right text-md-right'" v-for="header in headers" :key="header.id">
+        <td :class="header.left ? '' : 'text-xs-center text-md-center'" v-for="header in headers" :key="header.id">
             {{ getColumnData(props.item, header.value) }}
         </td>
 

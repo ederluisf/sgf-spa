@@ -4,11 +4,11 @@
       <v-flex md4 xs12>
         <v-select
           :items="manufacturers"
-          v-model="manufacturerId"
-          @change="setManufacturer"
+          v-model="entity.manufacturer"
           label="Selecione"
+          @change="setManufacturer"
           placeholder="Montadora"
-          item-value="id"
+          combobox
           item-text="name">
         </v-select>
       </v-flex>
@@ -38,14 +38,13 @@ import { mapActions, mapGetters } from 'vuex'
 export default {
   data () {
     return {
-      manufacturerId: null
     }
   },
 
   computed: {
     ...mapGetters([
-      'manufacturers',
-      'entity'
+      'entity',
+      'manufacturers'
     ])
   },
 
@@ -54,9 +53,13 @@ export default {
       'listManufacturers'
     ]),
 
-    setManufacturer (idManufacturer) {
-      this.entity.manufacturer = { id: idManufacturer }
+    setManufacturer (teste) {
+      console.log('Selecionado: ' + JSON.stringify(teste))
     }
+  },
+
+  mounted () {
+    console.log('Entidade: ' + JSON.stringify(this.entity))
   },
 
   created () {

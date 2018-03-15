@@ -1,6 +1,6 @@
 <template>
   <v-flex>
-    <v-text-field label="Nome" v-model="entity.name" @blur="setValueIn('name', entity.name)"></v-text-field>
+    <v-text-field label="Nome" v-model="entity.name"></v-text-field>
 
     <v-layout>
       <v-flex md4 sm12 xs12>
@@ -54,10 +54,6 @@ export default {
       'setFile',
       'setUrl'
     ]),
-
-    setValueIn (attribute, value) {
-      this.entity[attribute] = value
-    },
 
     fileAdded (fileUploaded) {
       if (!fileUploaded.manuallyAdded) {

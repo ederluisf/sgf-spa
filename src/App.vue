@@ -11,7 +11,12 @@
       <v-content>
         <v-container fluid fill-height px-2 py-2>
           <v-layout justify-center align-center>
-            <router-view/>
+            <transition
+                appear mode="out-in"
+                enter-active-class="animated fadeIn"
+                leave-active-class="animated fadeOut">
+              <router-view/>
+            </transition>
           </v-layout>
         </v-container>
       </v-content>
