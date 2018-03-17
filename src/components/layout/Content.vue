@@ -16,7 +16,7 @@
             <v-spacer></v-spacer>
             <v-spacer></v-spacer>
             <v-text-field append-icon="search" v-model="search" @input="doSearch"
-                          v-show="pageType === 'LIST'" single-line hide-details placeholder="Pesquisar"></v-text-field>
+                       v-show="pageType === 'LIST'" single-line hide-details placeholder="Pesquisar"></v-text-field>
       </v-card-title>
 
       <!-- Tabela ou Formulário -->
@@ -54,12 +54,15 @@
         </transition>
       </v-card-actions>
     </v-card>
+
+    <app-snack></app-snack>
   </v-flex>
 </template>
 
 <script>
-import Table from '../shared/table/Table'
 import { mapGetters, mapActions } from 'vuex'
+import Table from '../shared/table/Table'
+import Snack from '../shared/snack/Snack'
 
 export default {
   props: {
@@ -67,7 +70,8 @@ export default {
   },
 
   components: {
-    appTable: Table
+    appTable: Table,
+    appSnack: Snack
   },
 
   data () {

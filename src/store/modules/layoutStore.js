@@ -1,7 +1,7 @@
 const state = {
   drawer: null,
   miniDrawer: false,
-  dialog: false
+  dialog: false // Dialog do login --- refactor
 }
 
 const mutations = {

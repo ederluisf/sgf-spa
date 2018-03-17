@@ -7,7 +7,13 @@ const state = {
   search: '',
   url: '/',
   pageType: 'LIST',
-  showConfirmDialog: false
+  showConfirmDialog: false,
+  showSnack: false,
+  configSnack: {
+    text: '',
+    timeout: 3000,
+    color: 'success'
+  }
 }
 
 const mutations = {
@@ -35,6 +41,12 @@ const mutations = {
   'REMOVE_ITEM' (state, entity) {
     const index = state.items.indexOf(entity)
     state.items.splice(index, 1)
+  },
+  'SET_SHOW_SNACK' (state, showSnack) {
+    state.showSnack = showSnack
+  },
+  'SET_CONFIG_SNACK' (state, configSnack) {
+    state.configSnack = configSnack
   }
 }
 
@@ -57,6 +69,7 @@ const actions = {
     if (!entity.id) {
       axios.post(state.url, entity)
         .then(res => {
+          setSnackConf(commit, 'Item salvo com sucesso!')
           resetValues(commit)
           commit('SET_PAGE_TYPE', 'LIST')
         })
@@ -64,6 +77,7 @@ const actions = {
     } else {
       axios.put(`${state.url}/${entity.id}`, entity)
         .then(res => {
+          setSnackConf(commit, 'Item editado com sucesso!')
           resetValues(commit)
           commit('SET_PAGE_TYPE', 'LIST')
         })
@@ -83,6 +97,7 @@ const actions = {
   deleteItem ({ commit, state }) {
     axios.delete(state.url + '/' + state.entity.id)
       .then(res => {
+        setSnackConf(commit, 'Item removido com sucesso!')
       })
       .catch(error => console.log('Erro ao deletar: ' + error))
 
@@ -108,6 +123,14 @@ const actions = {
 
   setUrl: ({ commit }, url) => {
     commit('SET_URL', url)
+  },
+
+  setShowSnack: ({ commit }, showSnack) => {
+    commit('SET_SHOW_SNACK', showSnack)
+  },
+
+  setConfigSnack: ({ commit }, configSnack) => {
+    commit('SET_CONFIG_SNACK', configSnack)
   }
 }
 
@@ -132,6 +155,12 @@ const getters = {
   },
   showConfirmDialog: state => {
     return state.showConfirmDialog
+  },
+  showSnack: state => {
+    return state.showSnack
+  },
+  configSnack: state => {
+    return state.configSnack
   }
 }
 
@@ -154,4 +183,25 @@ function resetValues (commit) {
   commit('SET_ENTITY', {})
   commit('SET_FILE', null)
   commit('SET_FILES', [])
+}
+
+function setSnackConf (
+  commit,
+  text = state.configSnack.text,
+  color = state.configSnack.color,
+  timeout = state.configSnack.timeout
+) {
+  commit('SET_CONFIG_SNACK', {
+    text: text,
+    color: color,
+    timeout: timeout
+  })
+  hideSnackOnTimeout(commit)
+}
+
+function hideSnackOnTimeout (commit) {
+  commit('SET_SHOW_SNACK', true)
+  setTimeout(() => {
+    commit('SET_SHOW_SNACK', false)
+  }, state.configSnack.timeout)
 }
