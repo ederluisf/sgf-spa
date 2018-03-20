@@ -1,6 +1,6 @@
 <template>
   <v-flex>
-    <v-text-field label="Nome" v-model="entity.name"></v-text-field>
+    <v-text-field label="Nome" v-model.trim="entity.name" required></v-text-field>
 
     <v-layout>
       <v-flex md4 sm12 xs12>

@@ -69,11 +69,11 @@ const actions = {
     if (!entity.id) {
       axios.post(state.url, entity)
         .then(res => {
-          setSnackConf(commit, 'Item salvo com sucesso!')
+          setSnackConf(commit, 'Item salvo com sucesso!', 'success')
           resetValues(commit)
           commit('SET_PAGE_TYPE', 'LIST')
         })
-        .catch(error => getErrors(error))
+        .catch(error => getErrors(commit, error))
     } else {
       axios.put(`${state.url}/${entity.id}`, entity)
         .then(res => {
@@ -171,10 +171,12 @@ export default {
   getters
 }
 
-function getErrors (error) {
+function getErrors (commit, error) {
   if (error.response) {
-    console.log(error.response.status)
-    console.log(error.response.data.errors)
+    let errors = error.response.data.errors
+    errors.forEach(erro => {
+      setSnackConf(commit, erro, 'error')
+    })
   }
   console.log(error.config)
 }
