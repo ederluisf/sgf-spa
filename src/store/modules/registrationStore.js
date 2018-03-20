@@ -13,7 +13,8 @@ const state = {
     text: '',
     timeout: 3000,
     color: 'success'
-  }
+  },
+  validator: {}
 }
 
 const mutations = {
@@ -47,6 +48,9 @@ const mutations = {
   },
   'SET_CONFIG_SNACK' (state, configSnack) {
     state.configSnack = configSnack
+  },
+  'SET_VALIDATOR' (state, validator) {
+    state.validator = validator
   }
 }
 
@@ -131,6 +135,10 @@ const actions = {
 
   setConfigSnack: ({ commit }, configSnack) => {
     commit('SET_CONFIG_SNACK', configSnack)
+  },
+
+  setValidator: ({ commit }, validator) => {
+    commit('SET_VALIDATOR', validator)
   }
 }
 
@@ -161,6 +169,9 @@ const getters = {
   },
   configSnack: state => {
     return state.configSnack
+  },
+  validator: state => {
+    return state.validator
   }
 }
 

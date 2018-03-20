@@ -32,7 +32,7 @@
 
       <!-- Barra de botões -->
       <v-card-actions class="absolute-bottom pr-4">
-         <transition
+        <transition
           appear mode="out-in"
           enter-active-class="animated fadeIn"
           leave-active-class="animated fadeOut">
@@ -42,7 +42,7 @@
 
           <div v-else>
             <v-btn v-show="pageType === 'FORM_NEW' || pageType === 'FORM_EDIT'" color="success"
-                   @click="saveEntity">
+                  @click="saveEntity">
               Salvar
             </v-btn>
 
@@ -85,7 +85,8 @@ export default {
       'pageType',
       'file',
       'files',
-      'entity'
+      'entity',
+      'validator'
     ])
   },
 
@@ -111,7 +112,10 @@ export default {
     },
 
     saveEntity () {
-      this.save(this.entity)
+      this.validator.$touch()
+      if (!this.validator.$invalid) {
+        this.save(this.entity)
+      }
     }
   }
 }

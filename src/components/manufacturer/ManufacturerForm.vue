@@ -1,6 +1,12 @@
 <template>
   <v-flex>
-    <v-text-field label="Nome" v-model.trim="entity.name" required></v-text-field>
+    <v-text-field label="Nome"
+      v-model.trim="entity.name"
+      id="manufacturer-name"
+      @blur="$v.entity.name.$touch()"
+      @input="$v.entity.name.$touch()"
+      :error-messages="nameErrors"
+    />
 
     <v-layout>
       <v-flex md4 sm12 xs12>
@@ -19,6 +25,7 @@
 import { mapGetters, mapActions } from 'vuex'
 import vue2Dropzone from 'vue2-dropzone'
 import FileUtils from '../utils/FileUtils'
+import { required, maxLength } from 'vuelidate/lib/validators'
 
 export default {
   components: {
@@ -43,16 +50,25 @@ export default {
   computed: {
     ...mapGetters([
       'file',
-      'entity'
-    ])
+      'entity',
+      'validator'
+    ]),
 
+    nameErrors () {
+      const errors = []
+      if (!this.$v.entity.name.$dirty) return errors
+      !this.$v.entity.name.maxLength && errors.push('Nome pode ter no máximo 10 letras')
+      !this.$v.entity.name.required && errors.push('Nome é obrigatório.')
+      return errors
+    }
   },
 
   methods: {
     ...mapActions([
       'setEntity',
       'setFile',
-      'setUrl'
+      'setUrl',
+      'setValidator'
     ]),
 
     fileAdded (fileUploaded) {
@@ -75,6 +91,17 @@ export default {
         let file = { size: 512, name: 'Logotipo' }
         this.$refs.myDropzone.manuallyAddFile(file, blobUrl)
       }
+    }
+  },
+
+  created () {
+    console.log('V em Manufacturer Form: ' + JSON.stringify(this.$v))
+    this.setValidator(this.$v)
+  },
+
+  validations: {
+    entity: {
+      name: { required, maxLength: maxLength(10) }
     }
   }
 }

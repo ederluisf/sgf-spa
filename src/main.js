@@ -6,6 +6,7 @@ import App from './App'
 import router from './router'
 import store from './store/store'
 import axios from 'axios'
+import Vuelidate from 'vuelidate'
 
 // CSS imports
 import 'vuetify/dist/vuetify.min.css'
@@ -17,6 +18,7 @@ axios.defaults.headers.get['Accepts'] = 'application/json'
 
 Vue.config.productionTip = false
 
+Vue.use(Vuelidate)
 Vue.use(Vuetify)
 
 /* eslint-disable no-new */
