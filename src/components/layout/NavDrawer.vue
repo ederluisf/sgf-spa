@@ -1,6 +1,6 @@
 <template>
   <v-navigation-drawer fixed clipped width="250" mini-variant-width="60"
-                       app :value="drawer" :mini-variant.sync="miniDrawer" hide-overlay>
+                       app :value.sync="drawer" :mini-variant.sync="miniDrawer" hide-overlay>
     <v-list dense>
       <v-list-group v-for="menu in menus" :key="menu.title" :prepend-icon="menu.action" no-action>
         <v-list-tile slot="activator">
