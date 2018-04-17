@@ -3,11 +3,10 @@
     <v-layout row wrap>
       <v-flex md4 xs12>
         <v-select
-          :items="manufacturers"
-          v-model="entity.manufacturer"
+          :items="models"
+          v-model="entity.model"
           label="Selecione"
-          @change="setManufacturer"
-          placeholder="Montadora"
+          placeholder="Modelo"
           combobox
           item-text="name">
         </v-select>
@@ -15,17 +14,17 @@
 
       <v-flex md4 xs12>
         <v-text-field
-          v-model="entity.name"
-          label="Nome"
-          id="name">
+          v-model="entity.color"
+          label="Cor"
+          id="color">
         </v-text-field>
       </v-flex>
 
       <v-flex md4 xs12>
         <v-text-field
-          v-model="entity.version"
-          label="Versão"
-          id="version">
+          v-model="entity.plate"
+          label="Placa"
+          id="plate">
         </v-text-field>
       </v-flex>
     </v-layout>
@@ -44,18 +43,14 @@ export default {
   computed: {
     ...mapGetters([
       'entity',
-      'manufacturers'
+      'vehicles'
     ])
   },
 
   methods: {
     ...mapActions([
-      'listManufacturers'
-    ]),
-
-    setManufacturer (teste) {
-      console.log('Selecionado: ' + JSON.stringify(teste))
-    }
+      'listModels'
+    ])
   },
 
   mounted () {
@@ -63,7 +58,7 @@ export default {
   },
 
   created () {
-    this.listManufacturers()
+    this.listModels()
   }
 }
 </script>

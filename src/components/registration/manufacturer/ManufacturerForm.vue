@@ -24,7 +24,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import vue2Dropzone from 'vue2-dropzone'
-import FileUtils from '../utils/FileUtils'
+import FileUtils from '@/components/utils/FileUtils'
 import { required, maxLength } from 'vuelidate/lib/validators'
 
 export default {

@@ -6,6 +6,7 @@ import registration from './modules/registrationStore'
 import inputFileStore from './modules/inputFileStore'
 
 import manufacturerStore from './modules/entities/manufacturerStore'
+import modelStore from './modules/entities/modelStore'
 
 Vue.use(Vuex)
 
@@ -14,6 +15,7 @@ export default new Vuex.Store({
     layout,
     registration,
     inputFileStore,
-    manufacturerStore
+    manufacturerStore,
+    modelStore
   }
 })

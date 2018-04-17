@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import ManufacturerWrapper from '@/components/manufacturer/ManufacturerWrapper'
-import ModelWrapper from '@/components/model/ModelWrapper'
+import ManufacturerWrapper from '@/components/registration/manufacturer/ManufacturerWrapper'
+import ModelWrapper from '@/components/registration/model/ModelWrapper'
+import VehicleWrapper from '@/components/registration/vehicle/VehicleWrapper'
 
 Vue.use(Router)
 
@@ -17,6 +18,11 @@ export default new Router({
       path: '/model',
       name: 'model',
       component: ModelWrapper
+    },
+    {
+      path: '/vehicle',
+      name: 'vehicle',
+      component: VehicleWrapper
     }
   ]
 })

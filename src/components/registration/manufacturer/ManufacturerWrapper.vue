@@ -6,9 +6,9 @@
 
 <script>
 import { mapActions } from 'vuex'
-import Content from '../layout/Content'
+import Content from '@/components/layout/Content'
 import ManufacturerForm from './ManufacturerForm'
-import manufacturerHeaders from '../../data/entity-headers/manufacturerHeaders'
+import manufacturerHeaders from '@/data/entity-headers/manufacturerHeaders'
 
 export default {
   components: {
