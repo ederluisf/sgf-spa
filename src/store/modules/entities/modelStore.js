@@ -13,8 +13,10 @@ const mutations = {
 
 const actions = {
   listModels: ({ commit, state }) => {
+    console.log('URL dentro do list models' + state.url)
     axios.get(state.url)
       .then(res => {
+        console.log('Retorno do listModels' + res.data)
         commit('SET_MODELS', res.data)
       })
       .catch(error => console.error(error))
@@ -22,7 +24,7 @@ const actions = {
 }
 
 const getters = {
-  manufacturers: state => {
+  models: state => {
     return state.models
   }
 }

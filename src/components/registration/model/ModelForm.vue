@@ -2,14 +2,13 @@
   <v-container fluid grid-list-lg>
     <v-layout row wrap>
       <v-flex md4 xs12>
-        <v-select
+        <v-combobox
           :items="manufacturers"
           v-model="entity.manufacturer"
           label="Selecione"
           placeholder="Montadora"
-          combobox
           item-text="name">
-        </v-select>
+        </v-combobox>
       </v-flex>
 
       <v-flex md4 xs12>
@@ -54,7 +53,6 @@ export default {
   },
 
   mounted () {
-    console.log('Entidade: ' + JSON.stringify(this.entity))
   },
 
   created () {

@@ -17,7 +17,7 @@
 
     <v-btn icon large>
         <v-avatar size="32px" tile>
-        <img src="https://vuetifyjs.com/static/doc-images/logo.svg"
+        <img src="https://cdn.vuetifyjs.com/images/logos/logo.svg"
              alt="Vuetify">
         </v-avatar>
     </v-btn>

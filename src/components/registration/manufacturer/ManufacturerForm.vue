@@ -95,7 +95,7 @@ export default {
   },
 
   created () {
-    console.log('V em Manufacturer Form: ' + JSON.stringify(this.$v))
+    // console.log('V em Manufacturer Form: ' + JSON.stringify(this.$v))
     this.setValidator(this.$v)
   },
 
