@@ -65,10 +65,6 @@ import { mapGetters, mapActions } from 'vuex'
 import ConfirmDialog from '../dialog/ConfirmDialog'
 
 export default {
-  created () {
-    this.$store.dispatch('listItems')
-  },
-
   components: {
     appConfirm: ConfirmDialog
   },
@@ -133,6 +129,10 @@ export default {
         this.pagination.descending = false
       }
     }
+  },
+
+  created () {
+    this.$store.dispatch('listItems')
   }
 }
 </script>

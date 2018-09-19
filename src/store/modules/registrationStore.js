@@ -62,7 +62,7 @@ const actions = {
   listItems: ({ commit, state }) => {
     axios.get(state.url)
       .then(res => {
-        console.log('ITEMS: ' + JSON.stringify(res.data))
+        // console.log('ITEMS: ' + JSON.stringify(res.data))
         commit('SET_ITEMS', res.data)
       })
       .catch(error => console.error(error))
@@ -184,10 +184,15 @@ export default {
 
 function getErrors (commit, error) {
   if (error.response) {
-    let errors = error.response.data.errors
-    errors.forEach(erro => {
-      setSnackConf(commit, erro, 'error')
-    })
+    let data = error.response.data
+
+    if (data.errors) {
+      data.errors.forEach(erro => {
+        setSnackConf(commit, erro, 'error')
+      })
+    } else {
+      setSnackConf(commit, data.error + ' ===> ' + data.message, 'error')
+    }
   }
   console.log(error.config)
 }
