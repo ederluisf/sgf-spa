@@ -8,7 +8,7 @@
             <v-list-tile-title>{{ menu.title }}</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile v-for="subMenu in menu.subMenus" :key="subMenu.title" :to="subMenu.route">
+        <v-list-tile v-for="subMenu in menu.subMenus" :key="subMenu.title" :to="subMenu.route" @click="returnPageTypeToList">
           <v-list-tile-action class="submenu-icon">
             <v-icon small>{{ subMenu.action }}</v-icon>
           </v-list-tile-action>
@@ -23,7 +23,7 @@
 
 <script>
 import menus from '../../data/menus'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   data () {
@@ -37,6 +37,16 @@ export default {
       'drawer',
       'miniDrawer'
     ])
+  },
+
+  methods: {
+    ...mapActions([
+      'setPageType'
+    ]),
+
+    returnPageTypeToList () {
+      this.setPageType('LIST')
+    }
   }
 }
 </script>

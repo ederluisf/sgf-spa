@@ -122,6 +122,13 @@ export default {
       if (!this.$v.entity.year.$dirty) return errors
       !this.$v.entity.year.required && errors.push('Ano é obrigatório.')
       return errors
+    },
+
+    modelErrors () {
+      const errors = []
+      if (!this.$v.entity.model.$dirty) return errors
+      !this.$v.entity.model.required && errors.push('Modelo é obrigatório.')
+      return errors
     }
   },
 
@@ -134,7 +141,8 @@ export default {
 
   validations: {
     entity: {
-      year: { required }
+      year: { required },
+      model: { required }
     }
   },
 
