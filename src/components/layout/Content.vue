@@ -33,7 +33,7 @@
 
       <!-- Barra de botões -->
       <v-card-actions class="pr-4">
-        <v-footer absolute color="primary" class="mb-2 pr-2">
+        <v-footer absolute color="white" class="mb-2 pr-2">
           <v-spacer></v-spacer>
 
           <transition
