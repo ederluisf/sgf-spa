@@ -28,30 +28,36 @@
           <app-table v-if="pageType === 'LIST'"></app-table>
           <slot v-else name="form"></slot>
         </transition>
+
       </v-card-text>
 
       <!-- Barra de botões -->
-      <v-card-actions class="absolute-bottom pr-4">
-        <transition
-          appear mode="out-in"
-          enter-active-class="animated fadeIn"
-          leave-active-class="animated fadeOut">
-          <v-btn v-if="pageType === 'LIST'" color="primary" @click="newItem">
-            Novo
-          </v-btn>
+      <v-card-actions class="pr-4">
+        <v-footer absolute color="primary" class="mb-2 pr-2">
+          <v-spacer></v-spacer>
 
-          <div v-else>
-            <v-btn v-show="pageType === 'FORM_NEW' || pageType === 'FORM_EDIT'" color="success"
-                  @click="saveEntity">
-              Salvar
+          <transition
+            appear mode="out-in"
+            enter-active-class="animated fadeIn"
+            leave-active-class="animated fadeOut">
+
+            <v-btn v-if="pageType === 'LIST'" color="primary" @click="newItem">
+              Novo
             </v-btn>
 
-            <v-btn v-show="pageType === 'FORM_NEW' || pageType === 'FORM_EDIT'" color="error"
-                  @click="cancel" class="ml-4">
-              Cancelar
-            </v-btn>
-          </div>
-        </transition>
+            <div v-else>
+              <v-btn v-show="pageType === 'FORM_NEW' || pageType === 'FORM_EDIT'" color="success"
+                    @click="saveEntity">
+                Salvar
+              </v-btn>
+
+              <v-btn v-show="pageType === 'FORM_NEW' || pageType === 'FORM_EDIT'" color="error"
+                    @click="cancel" class="ml-4">
+                Cancelar
+              </v-btn>
+            </div>
+          </transition>
+        </v-footer>
       </v-card-actions>
     </v-card>
 

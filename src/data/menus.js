@@ -3,8 +3,9 @@ export default [
     action: 'library_books',
     title: 'Cadastros',
     subMenus: [
-      { title: 'Montadoras', action: 'build', route: 'manufacturer' },
       { title: 'Modelos', action: 'description', route: 'model' },
+      { title: 'Montadoras', action: 'build', route: 'manufacturer' },
+      { title: 'Usuários', action: 'person', route: 'user' },
       { title: 'Veículos', action: 'directions_car', route: 'vehicle' }
     ]
   },

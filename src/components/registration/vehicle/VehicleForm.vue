@@ -16,7 +16,6 @@
           :items="engines"
           v-model="entity.engine"
           label="Selecione"
-          chips
           placeholder="Motor"
           item-text="type"
           item-value="value.type"
